@@ -4,25 +4,33 @@
 [![100% Free to Run](https://img.shields.io/badge/Cost-100%25%20Free-brightgreen.svg)](#-built-to-be-100-free)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyour-username%2Fyour-repo-name&env=NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_ANON_KEY,SUPABASE_SERVICE_ROLE_KEY,GEMINI_API_KEY,GEMINI_CHAT_MODEL,GEMINI_EMBEDDING_MODEL,UPSTASH_REDIS_REST_URL,UPSTASH_REDIS_REST_TOKEN,RESEND_API_KEY,NEXT_PUBLIC_APP_URL)
 
+---
+<img width="1899" height="916" alt="Screenshot 2026-08-16 161014" src="https://github.com/user-attachments/assets/5ecc0563-d19e-400b-9fc4-80912bcf8319" />
+
+---
 **Turn your resume into an AI you can talk to.**
 
 Upload your resume, get a shareable link, and let recruiters have a real conversation with an AI version of you — one that only ever answers from what's actually on your resume, and tells them honestly when something isn't. No app to install, no account needed on the recruiter's side, and it's completely free to run.
+<img width="1895" height="917" alt="Screenshot 2026-08-16 161311" src="https://github.com/user-attachments/assets/ca98279a-3b87-45f9-b34d-23f97b2343db" />
 
 ---
-
 ## 🎯 What is this, really?
 
 If you're job hunting, screening calls eat up a huge amount of time — both yours and the recruiter's — on the same handful of questions. **AI Candidate Avatar** lets a recruiter get those answers the moment they're curious, at 2am if that's when they're reviewing candidates, without waiting for a callback.
-
+<img width="1895" height="918" alt="Screenshot 2026-08-16 161126" src="https://github.com/user-attachments/assets/3ec33f36-410b-420d-bcf2-9415d77df62d" />
 It's not a chatbot that makes things up to sound impressive. It's built around one rule: **the avatar only ever speaks from your resume and whatever else you choose to give it.** If a recruiter asks about a skill you don't have, it says so — honestly, in character — instead of guessing.
 
+---
 ### 👩‍💼 If you're a recruiter
 
 Someone shared a link with you that looks like `/u/their-name`? Just open it — no sign-up, no password. Type your name, ask whatever you'd ask in a real screening call, and you'll get grounded, cited answers in real time. At the end, you'll get a clean summary of what was covered and a downloadable transcript.
+<img width="1903" height="914" alt="Screenshot 2026-08-16 161217" src="https://github.com/user-attachments/assets/6043f1c3-6c18-4f15-94a6-6e571c56aae0" />
 
+---
 ### 👤 If you're job hunting
 
 Upload your resume (and anything else that captures your experience — a portfolio doc, project write-ups, even a YAML/Markdown notes file). The app builds a private, personal chatbot version of you. You test it yourself before it ever goes live, review exactly what it says, and only then share your link. You stay in control of your knowledge base at all times — add to it, edit it, pause your avatar, or delete it whenever you want.
+<img width="1896" height="925" alt="Screenshot 2026-08-16 161042" src="https://github.com/user-attachments/assets/61303fb0-f03c-4476-a0cb-cb0947a9259b" />
 
 ---
 
