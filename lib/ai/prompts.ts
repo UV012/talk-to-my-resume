@@ -1,18 +1,5 @@
 import { MatchedChunk } from '@/types/database';
 
-export const OPENING_QUESTIONS_REGEX = /^(?:tell me about yourself|who are you|give me an overview|walk me through your background|introduce yourself|tell me about your background|summarize your profile|what is your background|what do you do)\??$/i;
-
-/**
- * Checks whether an incoming HR query matches a generic opening background question
- */
-export function isOpeningQuestion(query: string): boolean {
-  const cleaned = query.trim().toLowerCase().replace(/[.,!]/g, '');
-  return OPENING_QUESTIONS_REGEX.test(cleaned) || 
-         cleaned === 'hi' || 
-         cleaned === 'hello' || 
-         cleaned === 'tell me about yourself';
-}
-
 /**
  * Standard pre-publish adversarial probe questions
  */
@@ -29,7 +16,6 @@ export const ADVERSARIAL_PROBE_QUESTIONS = [
 export function buildAvatarSystemPrompt(
   candidateName: string,
   targetRole: string | null,
-  summaryBullets: string[],
   retrievedChunks: MatchedChunk[]
 ): string {
   const roleDescription = targetRole ? ` targeting roles as "${targetRole}"` : '';
@@ -40,23 +26,16 @@ export function buildAvatarSystemPrompt(
       ).join('\n\n---\n\n')
     : 'No directly matching document sections found for this specific query.';
 
-  const summaryContext = summaryBullets.length > 0
-    ? summaryBullets.map(b => `- ${b}`).join('\n')
-    : 'No cached summary available.';
-
   return `You are the AI Candidate Avatar of ${candidateName}${roleDescription}.
 You are speaking directly with a recruiter or hiring manager ("HR") in an asynchronous text interview.
 
 CRITICAL OPERATIONAL RULES:
 1. FIRST-PERSON PERSONA: Speak in the first person ("I", "my experience", "when I worked at...", "my background"). You ARE ${candidateName}.
-2. STRICT FACTUAL GROUNDING: You MUST base all answers strictly and exclusively on the Provided Context and Verified Summary below.
+2. STRICT FACTUAL GROUNDING: You MUST base all answers strictly and exclusively on the Provided Context below.
 3. NEVER HALLUCINATE OR SPECULATE: If the recruiter asks about skills, experiences, projects, salary requirements, certifications, or personal opinions that are NOT mentioned in the provided context, gracefully state in-character that this specific detail is not in your current portfolio or profile notes on file (e.g. "I don't have details about that specific technology listed in my profile", "My uploaded notes don't specify my target compensation, but I'd be glad to discuss that in a direct follow-up interview").
 4. INLINE CITATIONS: Whenever you make a factual claim based on one or more sources, emit ONE citation tag per source immediately after the claim (e.g. [cite:1] or [cite:1][cite:2]). NEVER bundle multiple numbers into a single tag like [cite:1, 2] or [cite:1,2].
 5. FORMATTING: You may use light markdown formatting where it improves clarity: bold for key skills, technologies, or role titles, and bullet points when listing multiple distinct items (e.g. several technical skills or projects). Don't over-format — a short conversational answer should stay as plain sentences; formatting is for genuinely list-like or emphasis-worthy content, not every response.
 6. TONE: Professional, warm, articulate, confident, and direct. Keep answers concise and conversational (typically 2 to 4 sentences unless the recruiter specifically asks for a deeper walkthrough).
-
-=== VERIFIED CANDIDATE SUMMARY ===
-${summaryContext}
 
 === RETRIEVED SOURCE CHUNKS FOR CURRENT QUERY ===
 ${chunksContext}
@@ -140,32 +119,6 @@ Produce a valid JSON object matching this exact schema:
   ],
   "open_questions": [
     "List of questions the recruiter asked that fell outside the candidate's uploaded resume/knowledge base (where the avatar had to state it didn't know or couldn't answer)"
-  ]
-}`;
-}
-
-/**
- * Prompt to generate 3 bullet points summarizing the candidate's background
- */
-export function buildSummaryPrompt(candidateName: string, fullProfileText: string): string {
-  return `You are summarizing the background of ${candidateName} based on their uploaded resume and documents.
-
-Profile Text:
-"""
-${fullProfileText}
-"""
-
-Generate exactly 3 punchy, high-impact bullet points summarizing:
-1. Core professional identity, current/target role, and total breadth of experience.
-2. Key technical proficiencies, primary tech stack, or specialized domain expertise.
-3. Most notable achievements, key projects, or leadership highlights.
-
-Respond with valid JSON only in this exact format:
-{
-  "bullets": [
-    "Bullet 1 text",
-    "Bullet 2 text",
-    "Bullet 3 text"
   ]
 }`;
 }

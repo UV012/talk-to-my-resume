@@ -21,7 +21,6 @@ export async function GET(
       .from('avatars')
       .select(`
         *,
-        avatar_summary_cache (*),
         knowledge_sources (*),
         chat_sessions (*),
         publish_checks (*)

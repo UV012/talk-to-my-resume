@@ -1,50 +1,60 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 
-  /* Color System */
-  --bg-primary: #f8fafc;
+  /* Lumina Resume Color System */
+  --bg-primary: #faf8ff;
   --bg-surface: #ffffff;
   --bg-surface-elevated: #ffffff;
-  --bg-muted: #f1f5f9;
-  --bg-dark: #0f172a;
+  --bg-surface-dim: #d2d9f4;
+  --bg-muted: #f2f3ff;
+  --bg-dark: #131b2e;
 
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --text-muted: #94a3b8;
+  --text-primary: #131b2e;
+  --text-secondary: #434655;
+  --text-muted: #737686;
   --text-inverse: #ffffff;
 
-  --border-subtle: #e2e8f0;
-  --border-medium: #cbd5e1;
-  --border-focus: #3b82f6;
+  --border-subtle: rgba(218, 226, 253, 0.8);
+  --border-medium: #c3c6d7;
+  --border-focus: #2563eb;
 
-  --primary: #2563eb;
+  --primary: #004ac6;
+  --primary-container: #2563eb;
   --primary-hover: #1d4ed8;
   --primary-active: #1e40af;
   --primary-light: #eff6ff;
   --primary-ring: rgba(37, 99, 235, 0.25);
 
-  --accent-teal: #0d9488;
+  --secondary: #006a61;
+  --secondary-container: #86f2e4;
+  --accent-teal: #006a61;
   --accent-teal-light: #f0fdfa;
 
-  --success: #10b981;
+  --success: #006a61;
   --success-light: #ecfdf5;
-  --warning: #f59e0b;
+  --warning: #bc4800;
   --warning-light: #fffbeb;
-  --danger: #ef4444;
-  --danger-light: #fef2f2;
+  --danger: #ba1a1a;
+  --danger-light: #ffdad6;
 
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
   --radius-full: 9999px;
 
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --shadow-sm: 0 1px 2px 0 rgba(19, 27, 46, 0.05);
+  --shadow-md: 0 4px 12px -2px rgba(19, 27, 46, 0.07), 0 2px 4px -2px rgba(19, 27, 46, 0.05);
+  --shadow-lg: 0 12px 24px -4px rgba(19, 27, 46, 0.08), 0 4px 6px -4px rgba(19, 27, 46, 0.04);
+  --shadow-xl: 0 20px 30px -5px rgba(19, 27, 46, 0.1), 0 8px 10px -6px rgba(19, 27, 46, 0.04);
+  --shadow-electric: 0 0 20px rgba(37, 99, 235, 0.2);
 
   --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -78,7 +88,7 @@ p {
 
 /* Base Anchor Links - Scoped so buttons are never overridden */
 a:not(.btn) {
-  color: var(--primary);
+  color: var(--primary-container);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
@@ -100,19 +110,30 @@ a:not(.btn):hover {
   padding: 0 20px;
 }
 
-/* Card & Surface Components */
+/* Luminous Glassmorphic Card & Surface Components */
 .card {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(218, 226, 253, 0.7);
   border-radius: var(--radius-lg);
   padding: 24px;
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  box-shadow: 0 4px 20px -2px rgba(19, 27, 46, 0.04), 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal), border-color var(--transition-normal);
 }
 
 .card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  border-color: rgba(37, 99, 235, 0.3);
+  box-shadow: 0 16px 32px -4px rgba(19, 27, 46, 0.08), 0 0 20px rgba(37, 99, 235, 0.12);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
 }
 
 /* =============================================================================
@@ -141,13 +162,13 @@ a:not(.btn):hover {
   cursor: not-allowed;
 }
 
-/* 1. Primary Blue Button (Guaranteed #FFFFFF text on normal, hover, active, and focus) */
+/* 1. Primary Blue Button (Electric Blue #2563eb with glow on hover) */
 .btn-primary,
 a.btn-primary,
 button.btn-primary {
-  background-color: var(--primary) !important;
+  background-color: var(--primary-container) !important;
   color: #ffffff !important;
-  border-color: var(--primary) !important;
+  border-color: var(--primary-container) !important;
 }
 
 .btn-primary:hover:not(:disabled),
@@ -156,7 +177,7 @@ button.btn-primary:hover:not(:disabled) {
   background-color: var(--primary-hover) !important;
   color: #ffffff !important;
   border-color: var(--primary-hover) !important;
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 0 20px rgba(37, 99, 235, 0.35);
 }
 
 .btn-primary:active:not(:disabled),
@@ -166,7 +187,6 @@ button.btn-primary:active:not(:disabled) {
   color: #ffffff !important;
 }
 
-/* Force child elements (spans, SVGs/icons, labels) to maintain crisp white contrast */
 .btn-primary *,
 a.btn-primary *,
 button.btn-primary *,
@@ -180,23 +200,24 @@ button.btn-primary:hover * {
 .btn-secondary,
 a.btn-secondary,
 button.btn-secondary {
-  background-color: var(--bg-surface) !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
   color: var(--text-primary) !important;
-  border-color: var(--border-medium) !important;
+  border-color: rgba(218, 226, 253, 0.9) !important;
+  backdrop-filter: blur(8px);
 }
 
 .btn-secondary:hover:not(:disabled),
 a.btn-secondary:hover,
 button.btn-secondary:hover:not(:disabled) {
   background-color: var(--bg-muted) !important;
-  color: var(--text-primary) !important;
-  border-color: var(--text-secondary) !important;
+  color: var(--primary-container) !important;
+  border-color: var(--primary-container) !important;
 }
 
 .btn-secondary *,
 a.btn-secondary *,
 button.btn-secondary * {
-  color: var(--text-primary) !important;
+  color: inherit;
 }
 
 /* 3. Dark Button */
@@ -227,7 +248,7 @@ a.btn-danger,
 button.btn-danger {
   background-color: var(--danger-light) !important;
   color: var(--danger) !important;
-  border-color: rgba(239, 68, 68, 0.2) !important;
+  border-color: rgba(186, 26, 26, 0.2) !important;
 }
 
 .btn-danger:hover:not(:disabled),
@@ -248,13 +269,13 @@ button.btn-danger:hover * {
 .btn-sm {
   padding: 6px 12px;
   font-size: 13px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-md);
 }
 
 .btn-lg {
-  padding: 14px 24px;
-  font-size: 16px;
-  border-radius: var(--radius-lg);
+  padding: 12px 24px;
+  font-size: 15px;
+  border-radius: var(--radius-md);
 }
 
 /* Form Controls */
@@ -276,7 +297,7 @@ button.btn-danger:hover * {
   font-family: var(--font-sans);
   font-size: 14px;
   color: var(--text-primary);
-  background-color: var(--bg-surface);
+  background-color: rgba(255, 255, 255, 0.9);
   border: 1px solid var(--border-medium);
   border-radius: var(--radius-md);
   padding: 10px 14px;
@@ -285,7 +306,7 @@ button.btn-danger:hover * {
 }
 
 .input:focus, .textarea:focus, .select:focus {
-  border-color: var(--primary);
+  border-color: var(--primary-container);
   box-shadow: 0 0 0 3px var(--primary-ring);
 }
 
@@ -317,7 +338,7 @@ button.btn-danger:hover * {
 
 .badge-public {
   background-color: var(--primary-light);
-  color: var(--primary);
+  color: var(--primary-container);
 }
 
 .badge-permissioned {
@@ -332,7 +353,7 @@ button.btn-danger:hover * {
   font-family: var(--font-mono);
   font-size: 11px;
   font-weight: 600;
-  color: var(--primary);
+  color: var(--primary-container);
   background-color: var(--primary-light);
   padding: 2px 6px;
   border-radius: 4px;
@@ -349,8 +370,8 @@ button.btn-danger:hover * {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(15, 23, 42, 0.6);
-  backdrop-filter: blur(4px);
+  background-color: rgba(19, 27, 46, 0.5);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -360,14 +381,15 @@ button.btn-danger:hover * {
 }
 
 .modal-content {
-  background: var(--bg-surface);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
   border-radius: var(--radius-lg);
   width: 100%;
   max-width: 540px;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: var(--shadow-xl);
-  border: 1px solid var(--border-subtle);
+  box-shadow: 0 20px 40px -8px rgba(19, 27, 46, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.8) inset;
+  border: 1px solid rgba(218, 226, 253, 0.8);
   animation: slideUp 250ms ease-out;
 }
 
@@ -434,4 +456,3 @@ button.btn-danger:hover * {
   padding: 2px 5px;
   border-radius: 4px;
 }
-

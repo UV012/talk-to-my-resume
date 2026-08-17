@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { createAdminClient } from '@/lib/supabase/admin';
-import { defaultLLMClient } from '@/lib/ai/geminiClient';
 
 export async function DELETE(
   request: Request,
@@ -34,7 +33,7 @@ export async function DELETE(
 
     const admin = createAdminClient();
 
-    // Get knowledge source details
+    // Fetch knowledge source to get file path
     const { data: source } = await admin
       .from('knowledge_sources')
       .select('id, file_url')
@@ -52,30 +51,6 @@ export async function DELETE(
 
       // Delete knowledge_sources row (Postgres foreign key cascades document_chunks)
       await admin.from('knowledge_sources').delete().eq('id', sourceId);
-    }
-
-    // Refresh summary cache
-    const { data: remainingChunks } = await admin
-      .from('document_chunks')
-      .select('content')
-      .eq('avatar_id', avatarId)
-      .limit(30);
-
-    const candidateName = user.user_metadata?.display_name || user.email?.split('@')[0] || 'Candidate';
-    const fullProfileText = (remainingChunks || []).map((c) => c.content).join('\n\n');
-
-    if (remainingChunks && remainingChunks.length > 0) {
-      const summaryBullets = await defaultLLMClient.generateAvatarSummary(candidateName, fullProfileText);
-      await admin.from('avatar_summary_cache').upsert(
-        {
-          avatar_id: avatarId,
-          summary_bullets: summaryBullets,
-          generated_at: new Date().toISOString(),
-        },
-        { onConflict: 'avatar_id' }
-      );
-    } else {
-      await admin.from('avatar_summary_cache').delete().eq('avatar_id', avatarId);
     }
 
     return NextResponse.json({ success: true });

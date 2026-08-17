@@ -62,7 +62,6 @@ All five external services (Supabase, Gemini, Upstash, Resend, Vercel) are used 
 - **`avatars`** — one per candidate. Holds `status` (draft/published/paused), `visibility` (public/link-only/permissioned), and the share `slug`.
 - **`knowledge_sources`** — metadata for each uploaded file (resume or supplement).
 - **`document_chunks`** — parsed, chunked text with a vector embedding and a human-readable citation pointer back to its source. **Every row belongs to exactly one `avatar_id`.**
-- **`avatar_summary_cache`** — a pre-generated 3-bullet summary, served instantly for common opening questions so they don't cost an LLM call.
 - **`chat_sessions`** / **`chat_messages`** — one recruiter conversation and its turn-by-turn history. `recruiter_email` is nullable — only `recruiter_name` is required.
 - **`scorecards`** — the post-session brief: topic coverage, cited evidence, and open/unanswered questions. Deliberately **not** a numeric score.
 - **`publish_checks`** — results of the pre-publish adversarial probe run.

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, usePathname } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { User, LogOut, ArrowRight } from 'lucide-react';
+import { User, LogOut, ArrowRight, Sparkles } from 'lucide-react';
 import Logo from './Logo';
 
 export default function Navbar() {
@@ -43,26 +43,14 @@ export default function Navbar() {
   // If on recruiter interview surface (/u/[slug]), show focused recruiter navigation
   if (pathname.startsWith('/u/')) {
     return (
-      <header
-        style={{
-          borderBottom: '1px solid var(--border-subtle)',
-          backgroundColor: 'var(--bg-surface)',
-          padding: '12px 0',
-        }}
-      >
-        <div
-          className="container"
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <Link href="/" style={{ textDecoration: 'none' }}>
+      <header className="sticky top-0 z-40 bg-surface/85 backdrop-blur-md border-b border-surface-container-high/60 py-3 transition-all">
+        <div className="max-w-container-max mx-auto px-6 md:px-12 flex justify-between items-center">
+          <Link href="/" className="no-underline">
             <Logo size="sm" textVariant="full" />
           </Link>
-          <div style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
-            Live Recruiter Interview Mode
+          <div className="font-mono text-xs text-on-surface-variant flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Live Recruiter Interview Surface</span>
           </div>
         </div>
       </header>
@@ -70,48 +58,31 @@ export default function Navbar() {
   }
 
   return (
-    <header
-      style={{
-        borderBottom: '1px solid var(--border-subtle)',
-        backgroundColor: 'var(--bg-surface)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 40,
-      }}
-    >
-      <div
-        className="container"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          height: '68px',
-        }}
-      >
-        <Link href="/" style={{ textDecoration: 'none' }}>
+    <header className="sticky top-0 z-40 bg-surface/85 backdrop-blur-md border-b border-surface-container-high/60 transition-all">
+      <div className="max-w-container-max mx-auto px-6 md:px-12 flex justify-between items-center h-16">
+        <Link href="/" className="no-underline">
           <Logo size="md" textVariant="full" />
         </Link>
 
-        <nav style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+        <nav className="flex items-center gap-4">
           {!loading && (
             <>
               {user ? (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div className="flex items-center gap-3">
                   <Link href="/dashboard" className="btn btn-primary btn-sm">
-                    <User size={15} />
+                    <User size={14} />
                     <span>My Dashboard</span>
                   </Link>
                   <button
                     onClick={handleSignOut}
-                    className="btn btn-secondary btn-sm"
+                    className="btn btn-secondary btn-sm px-2.5"
                     title="Sign Out"
-                    style={{ padding: '6px 10px' }}
                   >
-                    <LogOut size={15} />
+                    <LogOut size={14} />
                   </button>
                 </div>
               ) : (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <div className="flex items-center gap-3">
                   <Link href="/login" className="btn btn-secondary btn-sm">
                     Log In
                   </Link>

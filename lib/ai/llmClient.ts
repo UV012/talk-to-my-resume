@@ -8,7 +8,6 @@ export interface ChatHistoryItem {
 export interface GenerateChatOptions {
   candidateName: string;
   targetRole: string | null;
-  summaryBullets: string[];
   retrievedChunks: MatchedChunk[];
   history: ChatHistoryItem[];
   userMessage: string;
@@ -33,7 +32,6 @@ export interface ScorecardResult {
 export interface LLMClient {
   generateEmbedding(text: string): Promise<number[]>;
   generateChatResponse(options: GenerateChatOptions): Promise<ChatResponseResult>;
-  generateAvatarSummary(candidateName: string, fullProfileText: string): Promise<string[]>;
   verifyGrounding(question: string, answer: string, candidateChunksText: string): Promise<GroundingCheckResult>;
   generateScorecard(
     candidateName: string,

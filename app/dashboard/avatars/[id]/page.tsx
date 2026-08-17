@@ -288,7 +288,6 @@ export default function AvatarStudioPage({ params }: { params: { id: string } })
 
   if (!avatar) return null;
 
-  const summaryBullets: string[] = avatar.avatar_summary_cache?.[0]?.summary_bullets || [];
   const knowledgeSources: KnowledgeSource[] = avatar.knowledge_sources || [];
   const hasFlaggedProbes = probes.some((p) => p.flagged);
 
@@ -540,31 +539,6 @@ export default function AvatarStudioPage({ params }: { params: { id: string } })
                   </div>
                 ))}
               </div>
-            )}
-          </div>
-
-          {/* 3-Bullet Summary Cache Preview */}
-          <div className="card">
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-              <Sparkles size={18} color="var(--primary)" />
-              <h3 style={{ fontSize: '17px', margin: 0 }}>Verified Candidate 3-Bullet Summary</h3>
-            </div>
-            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '16px' }}>
-              This summary is automatically regenerated on document upload and used to instant-answer opening recruiter queries (&quot;tell me about yourself&quot;) with zero additional latency.
-            </p>
-
-            {summaryBullets.length === 0 ? (
-              <div style={{ color: 'var(--text-muted)', fontSize: '13px', fontStyle: 'italic' }}>
-                Summary will be generated once you upload a resume.
-              </div>
-            ) : (
-              <ul style={{ paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {summaryBullets.map((bullet, idx) => (
-                  <li key={idx} style={{ fontSize: '14px', color: 'var(--text-primary)', lineHeight: 1.6 }}>
-                    {bullet}
-                  </li>
-                ))}
-              </ul>
             )}
           </div>
         </div>
