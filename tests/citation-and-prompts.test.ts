@@ -114,7 +114,7 @@ describe('Citation Parser, Markdown Formatter & Prompt Suite', () => {
   });
 
   it('buildAvatarSystemPrompt allows light markdown for clarity while enforcing unbundled citations', () => {
-    const prompt = buildAvatarSystemPrompt('Alex Doe', 'Staff Engineer', ['Summary 1'], []);
+    const prompt = buildAvatarSystemPrompt('Alex Doe', 'Staff Engineer', []);
 
     // Check for light markdown permission guidance
     expect(prompt).toContain('You may use light markdown formatting where it improves clarity');

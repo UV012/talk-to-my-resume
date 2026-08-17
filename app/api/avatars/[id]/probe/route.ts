@@ -65,15 +65,6 @@ export async function POST(
 
     const admin = createAdminClient();
 
-    // Pull summary cache and sample chunks for context
-    const { data: summaryRecord } = await admin
-      .from('avatar_summary_cache')
-      .select('summary_bullets')
-      .eq('avatar_id', avatarId)
-      .maybeSingle();
-
-    const summaryBullets = summaryRecord?.summary_bullets || [];
-
     const { data: allChunksData } = await admin
       .from('document_chunks')
       .select('content')
@@ -103,7 +94,6 @@ export async function POST(
       const answerResult = await defaultLLMClient.generateChatResponse({
         candidateName,
         targetRole: avatar.target_role,
-        summaryBullets,
         retrievedChunks: matchingChunks,
         history: [],
         userMessage: question,

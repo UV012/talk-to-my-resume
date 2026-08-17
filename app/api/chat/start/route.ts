@@ -36,8 +36,7 @@ export async function POST(request: Request) {
         permissioned_emails,
         target_role,
         candidate_id,
-        users:users (id, email, display_name),
-        avatar_summary_cache (summary_bullets)
+        users:users (id, email, display_name)
       `)
       .eq('slug', slug.toLowerCase().trim())
       .single();
@@ -108,9 +107,6 @@ export async function POST(request: Request) {
 
     const candidateUser = Array.isArray(avatar.users) ? avatar.users[0] : avatar.users;
     const candidateName = candidateUser?.display_name || 'Candidate';
-    const summaryRecord = Array.isArray(avatar.avatar_summary_cache)
-      ? avatar.avatar_summary_cache[0]
-      : avatar.avatar_summary_cache;
 
     return NextResponse.json({
       session,
@@ -120,7 +116,6 @@ export async function POST(request: Request) {
         visibility: avatar.visibility,
         target_role: avatar.target_role,
         candidate_name: candidateName,
-        summary_bullets: summaryRecord?.summary_bullets || [],
       },
     });
   } catch (error: any) {

@@ -10,7 +10,6 @@ import {
   buildAvatarSystemPrompt,
   buildGroundingVerificationPrompt,
   buildScorecardPrompt,
-  buildSummaryPrompt,
 } from './prompts';
 import { CitationReference } from '@/types/database';
 
@@ -76,7 +75,6 @@ export class GeminiLLMClient implements LLMClient {
     const {
       candidateName,
       targetRole,
-      summaryBullets,
       retrievedChunks,
       history,
       userMessage,
@@ -98,7 +96,6 @@ export class GeminiLLMClient implements LLMClient {
       const systemPrompt = buildAvatarSystemPrompt(
         candidateName,
         targetRole,
-        summaryBullets,
         retrievedChunks
       );
 
@@ -162,46 +159,6 @@ export class GeminiLLMClient implements LLMClient {
     } catch (error) {
       console.error('Error generating chat response via Gemini:', error);
       throw error;
-    }
-  }
-
-  /**
-   * Generate 3 bullet points summarizing the candidate
-   */
-  async generateAvatarSummary(candidateName: string, fullProfileText: string): Promise<string[]> {
-    if (!this.genAI) {
-      return [
-        `Experienced professional with strong track record in ${candidateName}'s field.`,
-        'Proven expertise across core engineering, system design, and domain competencies.',
-        'Demonstrated history of driving impactful projects from conception to completion.',
-      ];
-    }
-
-    try {
-      const chatModel = this.getChatModel();
-      const prompt = buildSummaryPrompt(candidateName, fullProfileText);
-      const result = await this.genAI.models.generateContent({
-        model: chatModel,
-        contents: [{ role: 'user', parts: [{ text: prompt }] }],
-        config: { responseMimeType: 'application/json' },
-      });
-
-      const parsed = JSON.parse(result.text ?? '{}');
-      if (Array.isArray(parsed.bullets) && parsed.bullets.length > 0) {
-        return parsed.bullets.slice(0, 3);
-      }
-      return [
-        `Professional profile for ${candidateName}.`,
-        'Uploaded technical skills and verified project achievements.',
-        'Ready for asynchronous interviews with recruiters.',
-      ];
-    } catch (error) {
-      console.error('Error generating summary via Gemini:', error);
-      return [
-        `Verified profile for ${candidateName}.`,
-        'Comprehensive work history and competencies on file.',
-        'Available for recruiter interview inquiries.',
-      ];
     }
   }
 

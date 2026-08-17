@@ -106,30 +106,10 @@ export async function POST(
       defaultLLMClient
     );
 
-    // 5. Regenerate 3-bullet summary cache for the avatar
-    const { data: allChunks } = await admin
-      .from('document_chunks')
-      .select('content')
-      .eq('avatar_id', avatarId)
-      .limit(30);
-
-    const fullProfileText = (allChunks || []).map((c) => c.content).join('\n\n');
-    const candidateName = user.user_metadata?.display_name || user.email?.split('@')[0] || 'Candidate';
-    const summaryBullets = await defaultLLMClient.generateAvatarSummary(candidateName, fullProfileText);
-
-    await admin
-      .from('avatar_summary_cache')
-      .upsert({
-        avatar_id: avatarId,
-        summary_bullets: summaryBullets,
-        generated_at: new Date().toISOString(),
-      }, { onConflict: 'avatar_id' });
-
     return NextResponse.json({
       success: true,
       knowledgeSource,
       chunksCreated: storedCount,
-      summaryBullets,
     });
   } catch (error: any) {
     console.error('Error in file upload and parsing pipeline:', error);

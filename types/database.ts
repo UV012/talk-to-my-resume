@@ -62,13 +62,6 @@ export interface MatchedChunk {
   similarity: number;
 }
 
-export interface AvatarSummaryCache {
-  id: string;
-  avatar_id: string;
-  summary_bullets: string[];
-  generated_at: string;
-}
-
 export interface ChatSession {
   id: string;
   avatar_id: string;
